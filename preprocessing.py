@@ -101,7 +101,8 @@ def compile_config(df_config: pd.DataFrame) -> List[Rule]:
     rules: List[Rule] = []
     for _, row in df.iterrows():
         ativo = str(row.get("ativo", True)).strip().lower() not in {"false", "0", "nao", "não"}
-        prio = int(pd.to_numeric(row.get("prioridade", 100), errors="coerce") if row.get("prioridade", 100) is not None else 100)
+        prio = pd.to_numeric(row.get("prioridade", 100), errors="coerce")
+        # prio = 100 if pd.isna(prio_raw) else int(prio_raw)
         if pd.isna(prio):
             prio = 100
 
